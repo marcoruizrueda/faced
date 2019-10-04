@@ -1,4 +1,4 @@
-# * A tensorflow 2.0 version of faced*
+# * A tensorflow 2.0 compatible version of faced*
 
 🚀 😏 CPU (Near) Real Time face detection
 
