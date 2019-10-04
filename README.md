@@ -1,4 +1,4 @@
-# *faced*
+# * A tensorflow 2.0 version of faced*
 
 🚀 😏 CPU (Near) Real Time face detection
 
@@ -11,27 +11,38 @@
 ```bash
 $ pip install git+https://github.com/iitzco/faced.git
 ```
+In case tensorflow shows a version's issue, so install:
 
-> Soon to be available on `PyPI`.
+```bash
+$ pip install --upgrade --force-reinstall tf-nightly --user
+or
+$ pip install --upgrade --force-reinstall tf-nightly-gpu --user
+```
 
 ## How to use
 
 ### As library
 
 ```python
+# Face detection with faced
 import cv2
-
+import sys
+#sys.path.append('/home/marco/face_recognizer/marco_env/lib/python3.5/site-packages/tensorflow_core')
 from faced import FaceDetector
 from faced.utils import annotate_image
+import time
 
 face_detector = FaceDetector()
 
+img_path = '/home/marco/Downloads/marco4.jpg'
 img = cv2.imread(img_path)
 rgb_img = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2RGB)
 
 # Receives RGB numpy image (HxWxC) and
-# returns (x_center, y_center, width, height, prob) tuples. 
-bboxes = face_detector.predict(rgb_img, thresh)
+# returns (x_center, y_center, width, height, prob) tuples.
+start = time.time()
+bboxes = face_detector.predict(rgb_img, thresh=0.6)
+print("Face detection took {} milliseconds.".format((time.time()-start)*1000))
 
 # Use this utils function to annotate the image.
 ann_img = annotate_image(img, bboxes)
@@ -40,6 +51,7 @@ ann_img = annotate_image(img, bboxes)
 cv2.imshow('image',ann_img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
 ```
 
 ### As command-line program
